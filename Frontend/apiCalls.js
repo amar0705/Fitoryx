@@ -1,1 +1,1 @@
-console.log("abcd");
+console.log("no-use");
