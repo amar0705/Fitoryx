@@ -381,7 +381,7 @@ footer {
   height: 40px;
   font-size: 17px;
   color: black;
-  background-color: rgb(71, 70, 70);
+  background-color: white;
   padding-left: 10px;
   border: 0;
   outline: 0;
@@ -411,7 +411,7 @@ footer {
   width: 40px;
 }
 .content-foot {
-  background-color: rgb(57, 56, 56);
+  background-color: skyblue;
 }
 .content-foot .foot-text {
   padding: 25px 80px;
