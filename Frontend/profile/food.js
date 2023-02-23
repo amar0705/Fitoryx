@@ -135,7 +135,7 @@ function getAllData(nutrients) {
         xValues.push("Consumed KCal");
       }
 
-      var barColors = ["#e3a72f"];
+      var barColors = ["#bde5f4"];
 
       new Chart("myChart", {
         type: "doughnut",
