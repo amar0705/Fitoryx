@@ -9,7 +9,7 @@ foodRouter.get("/", async (req, res) => {
     let foods = [];
     let foodsPresent = await FoodModel.find({ userID: user_id });
     if (user_id) {
-      if (foodsPresent?.length > 0) foods = await FoodModel.find({ userId: user_id });
+      if (foodsPresent?.length > 0) foods = await FoodModel.find({ userID: user_id });
     } else {
       foods = await FoodModel.find();
     }
