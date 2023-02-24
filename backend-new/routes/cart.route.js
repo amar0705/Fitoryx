@@ -8,7 +8,6 @@ const cartRouter = express.Router();
 cartRouter.get("/", async (req, res) => {
   const userId = req.query.user_id;
   let products = await CartModel.find({ userId: req.query.user_id });
-  console.log(products);
   try {
     let notes;
     if (userId) {

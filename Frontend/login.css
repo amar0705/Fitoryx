@@ -180,7 +180,7 @@ a:hover {
   border-radius: 25px;
   outline: none;
   border: none;
-  background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+  background-image: linear-gradient(to right, #7bd2ff, #4daff9, #7bd2ff);
   background-size: 200%;
   font-size: 1.2rem;
   color: #fff;
@@ -191,13 +191,13 @@ a:hover {
   transition: 777ms;
 }
 .btn[disabled] {
-  background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+  background-image: linear-gradient(to right, #7bd2ff, #4daff9, #7bd2ff);
   cursor: no-drop;
 }
 .btn:hover:not([disabled]) {
   background-position: right;
   display: block;
-  background-image: linear-gradient(to left, aqua, #38d39f, lightcyan);
+  background-image: linear-gradient(to left, rgb(87, 190, 241), #3a8ef5, rgb(71, 190, 245));
   transform: scale(104%);
 }
 

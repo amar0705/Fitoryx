@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const NutrientDataSchema = mongoose.Schema({ nutrient: String, value: Number });
 const foodSchema = mongoose.Schema({
-  userID: String,
   id: String,
+  userID: String,
   description: String,
   quantity: String,
   unit: String,
