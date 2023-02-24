@@ -7,8 +7,8 @@ if (token) {
   getCartItems2();
 } else {
   body.style.display = "none";
-  window.alert("can't access this!! Please Login First");
   window.location.replace("login.html");
+  window.alert("can't access this!! Please Login First");
 }
 
 function getCartItems2() {

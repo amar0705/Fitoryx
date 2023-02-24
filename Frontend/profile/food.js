@@ -1,5 +1,7 @@
 let data = [];
 
+let deleteFood = document.querySelector(".delete-icon-div");
+
 async function getNutrients() {
   let response = await fetch(`http://localhost:9090/nutrients`, {
     method: "GET",
@@ -49,27 +51,27 @@ function getAllData(nutrients) {
     options?.addEventListener("change", foodAddition);
     function foodAddition(e) {
       let obj = JSON.parse(e.target.value);
-      if (data.length > 0 && data.some((item) => item.id === obj.id)) {
-        let index = data.findIndex((item) => item.id === obj.id);
-        data[index].alteredQuantity = data[index].alteredQuantity + obj.quantity;
-        data[index].dynamicQuantity = data[index].alteredQuantity / obj.quantity;
-        data[index].nutrient_data.forEach((item) => {
-          item.altered_value = item.value * data[index].dynamicQuantity.toFixed(2);
-        });
-      } else {
-        obj.alteredQuantity = obj.quantity;
-        obj.dynamicQuantity = 1;
-        obj.nutrient_data.forEach((item) => {
-          item.altered_value = (item.value * obj.dynamicQuantity).toFixed(2);
-        });
-        data.push(obj);
-      }
-      postFood();
+      // if (data.length > 0 && data.some((item) => item.id === obj.id)) {
+      //   let index = data.findIndex((item) => item.id === obj.id);
+      //   data[index].alteredQuantity = data[index].alteredQuantity + obj.quantity;
+      //   data[index].dynamicQuantity = data[index].alteredQuantity / obj.quantity;
+      //   data[index].nutrient_data.forEach((item) => {
+      //     item.altered_value = item.value * data[index].dynamicQuantity.toFixed(2);
+      //   });
+      // } else {
+      //   obj.alteredQuantity = obj.quantity;
+      //   obj.dynamicQuantity = 1;
+      //   obj.nutrient_data.forEach((item) => {
+      //     item.altered_value = (item.value * obj.dynamicQuantity).toFixed(2);
+      //   });
+      //   data.push(obj);
+      // }
+      postFood(obj);
     }
 
     async function getFood() {
       let response = await fetch(
-        `http://localhost:9090/foods?user_id=${localStorage.getItem("userId")}`,
+        `http://localhost:9090/foods/?user_id=${localStorage.getItem("userId")}`,
         {
           method: "GET",
           headers: {
@@ -88,27 +90,24 @@ function getAllData(nutrients) {
         chartDisplay();
       });
     }
-    async function postFood() {
-      let postData = [...data];
-      postData.forEach((item) => {
-        item.userId = localStorage.getItem("userId");
-        delete item._id;
-      });
-      console.log(postData);
-      let response = await fetch("http://localhost:9090/foods/create", {
+    async function postFood(food) {
+      food.userID = localStorage.getItem("userId");
+      delete food._id;
+      console.log(food);
+      let response = await fetch("http://localhost:9090/foods/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("access_token"),
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(food),
       });
       let resData = response.json();
       resData.then((res) => {
-        console.log(res.data);
-        selectedData = JSON.parse(res.data);
-        selectedFoodTable(selectedData);
-        addToNutrientsSummary(selectedData);
+        data = [...res.data];
+        selectedData = [...res.data];
+        selectedFoodTable(res.data);
+        addToNutrientsSummary(res.data);
         chartDisplay();
       });
     }
@@ -261,11 +260,34 @@ function getAllData(nutrients) {
     `;
     }
 
+    deleteFood?.addEventListener("click", clearData);
+
     function clearData() {
       if (data.length > 0) {
-        data = [];
-        postFood();
+        deleteFoodAPI();
       }
+    }
+
+    async function deleteFoodAPI() {
+      let response = await fetch(
+        `http://localhost:9090/foods/delete/?user_id=${localStorage.getItem("userId")}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("access_token"),
+          },
+        }
+      );
+      let resData = response.json();
+      resData.then((res) => {
+        window.alert(res.message);
+        data = [];
+        selectedData = [];
+        selectedFoodTable([]);
+        addToNutrientsSummary([]);
+        chartDisplay();
+      });
     }
 
     getFood();

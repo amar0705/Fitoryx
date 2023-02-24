@@ -50,7 +50,7 @@ const displayProducts = (products) => {
       let para = document.createElement("p");
       para.innerHTML = `<b>${product?.title}</b>`;
       let price = document.createElement("h4");
-      price.innerText = product?.price;
+      price.innerText = `Rs. ${product?.price}`;
       childDivText.append(para, price);
       outerDiv.append(childDiv, childDivText);
       productsElement.append(outerDiv);
